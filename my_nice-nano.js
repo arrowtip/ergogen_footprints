@@ -53,20 +53,20 @@ module.exports = {
         hide 
         (effects (font (size 1.27 1.27) (thickness 0.15))))
     
-      ${''/* illustration of the (possible) USB port overhang */}
+      ${''/* illustration of USB port overhang */}
       (fp_line 
-        (start -19.304 -3.81) 
+        (start -19 -3.81) 
         (end -14.224 -3.81) 
         (layer Dwgs.User) 
         (width 0.15))
       (fp_line 
-        (start -19.304 3.81) 
-        (end -19.304 -3.81) 
+        (start -19 3.81) 
+        (end -19 -3.81) 
         (layer Dwgs.User) 
         (width 0.15))
       (fp_line 
         (start -14.224 3.81) 
-        (end -19.304 3.81) 
+        (end -19 3.81) 
         (layer Dwgs.User) 
         (width 0.15))
       (fp_line 
@@ -87,34 +87,34 @@ module.exports = {
           (width 0.15))
         (fp_line 
           (start -15.24 ${def_pos}6.35) 
-          (end -15.24 ${def_pos}8.89) 
+          (end -15.24 ${def_pos}9) 
           (layer ${side}.SilkS) 
           (width 0.15))
         (fp_line 
           (start -12.7 ${def_pos}6.35) 
-          (end -12.7 ${def_pos}8.89) 
+          (end -12.7 ${def_pos}9) 
           (layer ${side}.SilkS) 
           (width 0.15))
 
         ${''/* component outline */}
         (fp_line 
-          (start -17.78 8.89) 
-          (end 15.24 8.89) 
+          (start -18 9) 
+          (end 15.5 9) 
           (layer ${side}.SilkS) 
           (width 0.15))
         (fp_line 
-          (start 15.24 8.89) 
-          (end 15.24 -8.89) 
+          (start 15.5 9) 
+          (end 15.5 -9) 
           (layer ${side}.SilkS) 
           (width 0.15))
         (fp_line 
-          (start 15.24 -8.89) 
-          (end -17.78 -8.89) 
+          (start 15.5 -9) 
+          (end -18 -9) 
           (layer ${side}.SilkS) 
           (width 0.15))
         (fp_line 
-          (start -17.78 -8.89) 
-          (end -17.78 8.89) 
+          (start -18 -9) 
+          (end -18 9) 
           (layer ${side}.SilkS) 
           (width 0.15))
       
