@@ -9,9 +9,14 @@
 module.exports = {
   params: {
     designator: 'P',
-    from: undefined,
-    to: undefined,
     outline: true,
+    side: 'F',
+    rdy: {type: 'net', value: 'RDY'},
+    nrst: {type: 'net', value: 'NRST'},
+    gnd: {type: 'net', value: 'GND'},
+    v_in: {type: 'net', value: '3V3'},
+    scl: {type: 'net', value: 'SCL'},
+    sda: {type: 'net', value: 'SDA'},
   },
   body: p => {
     const standard = `
@@ -30,12 +35,168 @@ module.exports = {
         hide 
         (effects (font (size 1.27 1.27) (thickness 0.15))))
     `
+    const connector = `
+      ${'' /* footprint based on FPC-05F-6PH20 */}
+      (pad "1" smd rect
+        (at 5.75 -20 ${p.rot})
+        (size 0.3 1.25)
+        (layers "${p.side}.Cu" "${p.side}.Paste" "${p.side}.Mask")
+        ${p.rdy.str}
+      )
+      (pad "2" smd rect
+        (at 6.25 -20 ${p.rot})
+        (size 0.3 1.25)
+        (layers "${p.side}.Cu" "${p.side}.Paste" "${p.side}.Mask")
+        ${p.nrst.str}
+      )
+      (pad "3" smd rect
+        (at 6.75 -20 ${p.rot})
+        (size 0.3 1.25)
+        (layers "${p.side}.Cu" "${p.side}.Paste" "${p.side}.Mask")
+        ${p.gnd.str}
+      )
+      (pad "4" smd rect
+        (at 7.25 -20 ${p.rot})
+        (size 0.3 1.25)
+        (layers "${p.side}.Cu" "${p.side}.Paste" "${p.side}.Mask")
+        ${p.v_in.str}
+      )
+      (pad "5" smd rect
+        (at 7.75 -20 ${p.rot})
+        (size 0.3 1.25)
+        (layers "${p.side}.Cu" "${p.side}.Paste" "${p.side}.Mask")
+        ${p.scl.str}
+      )
+      (pad "6" smd rect
+        (at 8.25 -20 ${p.rot})
+        (size 0.3 1.25)
+        (layers "${p.side}.Cu" "${p.side}.Paste" "${p.side}.Mask")
+        ${p.sda.str}
+      )
+      (pad "MP" smd rect
+        (at 4.06 -17.425 ${p.rot})
+        (size 2 2.5)
+        (layers "${p.side}.Cu" "${p.side}.Paste" "${p.side}.Mask")
+      )
+      (pad "MP" smd rect
+        (at 9.94 -17.425 ${p.rot})
+        (size 2 2.5)
+        (layers "${p.side}.Cu" "${p.side}.Paste" "${p.side}.Mask")
+      )
+      (fp_circle
+        (center 4.95 -20.5)
+        (end 5.2 -20.5)
+        (layer "${p.side}.SilkS")
+        (fill yes)
+      )
+      (fp_line
+        (start 5.35 -19.8)
+        (end 3.06 -19.8)
+        (layer "${p.side}.SilkS")
+        (width 0.15)
+      )
+      (fp_line
+        (start 3.06 -19.8)
+        (end 3.06 -18.9)
+        (layer "${p.side}.SilkS")
+        (width 0.15)
+      )
+      (fp_line
+        (start 3.06 -16)
+        (end 3.06 -13.9)
+        (layer "${p.side}.SilkS")
+        (width 0.15)
+      )
+      (fp_line
+        (start 3.06 -13.9)
+        (end 10.94 -13.9)
+        (layer "${p.side}.SilkS")
+        (width 0.15)
+      )
+      (fp_line
+        (start 3.06 -14.9)
+        (end 10.94 -14.9)
+        (layer "${p.side}.SilkS")
+        (width 0.15)
+      )
+      (fp_line
+        (start 10.94 -16)
+        (end 10.94 -13.9)
+        (layer "${p.side}.SilkS")
+        (width 0.15)
+      )
+      (fp_line
+        (start 10.94 -19.8)
+        (end 10.94 -18.9)
+        (layer "${p.side}.SilkS")
+        (width 0.15)
+      )
+      (fp_line
+        (start 10.94 -19.8)
+        (end 8.65 -19.8)
+        (layer "${p.side}.SilkS")
+        (width 0.15)
+      )
+    `
     const outline = `
-      ${''/* outline hint */}
-      (fp_line (start -32.5 -24.5) (end 32.5 -24.5) (layer Dwgs.User) (width 0.15))
-      (fp_line (start 32.5 -24.5) (end 32.5 24.5) (layer Dwgs.User) (width 0.15))
-      (fp_line (start 32.5 24.5) (end -32.5 24.5) (layer Dwgs.User) (width 0.15))
-      (fp_line (start -32.5 24.5) (end -32.5 -24.5) (layer Dwgs.User) (width 0.15))
+      ${''/* outline hint (65x49mm, 3mm corner fillets)*/}
+      (fp_line (start -29.5 -24.5) (end 29.5 -24.5) (layer Dwgs.User) (width 0.15))
+      (fp_line (start 32.5 -21.5) (end 32.5 21.5) (layer Dwgs.User) (width 0.15))
+      (fp_line (start 29.5 24.5) (end -29.5 24.5) (layer Dwgs.User) (width 0.15))
+      (fp_line (start -32.5 21.5) (end -32.5 -21.5) (layer Dwgs.User) (width 0.15))
+      (fp_arc
+        (start -29.5 -21.5)
+        (end -32.5 -21.5)
+        (angle 90)
+        (layer Dwgs.User)
+        (width 0.15)
+      )
+      (fp_arc
+        (start 29.5 -21.5)
+        (end 29.5 -24.5)
+        (angle 90)
+        (layer Dwgs.User)
+        (width 0.15)
+      )
+      (fp_arc
+        (start -29.5 21.5)
+        (end -29.5 24.5)
+        (angle 90)
+        (layer Dwgs.User)
+        (width 0.15)
+      )
+      (fp_arc
+        (start 29.5 21.5)
+        (end 32.5 21.5)
+        (angle 90)
+        (layer Dwgs.User)
+        (width 0.15)
+      )
+      ${'' /* fpc connector on trackpad */}
+      (fp_line 
+        (start 2.5 9.5) 
+        (end 11.5 9.5) 
+        (layer Dwgs.User) 
+        (width 0.15)
+      )
+      (fp_line 
+        (start 11.5 9.5) 
+        (end 11.5 14.5) 
+        (layer Dwgs.User) 
+        (width 0.15)
+      )
+      (fp_line 
+        (start 11.5 14.5) 
+        (end 2.5 14.5) 
+        (layer Dwgs.User) 
+        (width 0.15)
+      )
+      (fp_line 
+        (start 2.5 14.5) 
+        (end 2.5 9.5) 
+        (layer Dwgs.User) 
+        (width 0.15)
+      )
     `
 
     const get_at_coordinates = () => {
@@ -74,6 +235,7 @@ module.exports = {
     return `
       ${standard}
       ${p.outline ? outline : ''}
+      ${connector}
       )
       `
   }
