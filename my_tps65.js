@@ -11,6 +11,7 @@ module.exports = {
     designator: 'P',
     outline: true,
     side: 'F',
+    conn_dist: 24,
     rdy: {type: 'net', value: 'RDY'},
     nrst: {type: 'net', value: 'NRST'},
     gnd: {type: 'net', value: 'GND'},
@@ -35,105 +36,109 @@ module.exports = {
         hide 
         (effects (font (size 1.27 1.27) (thickness 0.15))))
     `
+    get_dist = (x) => {
+      return p.conn_dist + x;
+    };
+
     const connector = `
       ${'' /* footprint based on FPC-05F-6PH20 */}
       (pad "1" smd rect
-        (at 5.75 -20 ${p.rot})
+        (at 5.75 -${p.conn_dist} ${p.rot})
         (size 0.3 1.25)
         (layers "${p.side}.Cu" "${p.side}.Paste" "${p.side}.Mask")
         ${p.rdy.str}
       )
       (pad "2" smd rect
-        (at 6.25 -20 ${p.rot})
+        (at 6.25 -${p.conn_dist} ${p.rot})
         (size 0.3 1.25)
         (layers "${p.side}.Cu" "${p.side}.Paste" "${p.side}.Mask")
         ${p.nrst.str}
       )
       (pad "3" smd rect
-        (at 6.75 -20 ${p.rot})
+        (at 6.75 -${p.conn_dist} ${p.rot})
         (size 0.3 1.25)
         (layers "${p.side}.Cu" "${p.side}.Paste" "${p.side}.Mask")
         ${p.gnd.str}
       )
       (pad "4" smd rect
-        (at 7.25 -20 ${p.rot})
+        (at 7.25 -${p.conn_dist} ${p.rot})
         (size 0.3 1.25)
         (layers "${p.side}.Cu" "${p.side}.Paste" "${p.side}.Mask")
         ${p.v_in.str}
       )
       (pad "5" smd rect
-        (at 7.75 -20 ${p.rot})
+        (at 7.75 -${p.conn_dist} ${p.rot})
         (size 0.3 1.25)
         (layers "${p.side}.Cu" "${p.side}.Paste" "${p.side}.Mask")
         ${p.scl.str}
       )
       (pad "6" smd rect
-        (at 8.25 -20 ${p.rot})
+        (at 8.25 -${p.conn_dist} ${p.rot})
         (size 0.3 1.25)
         (layers "${p.side}.Cu" "${p.side}.Paste" "${p.side}.Mask")
         ${p.sda.str}
       )
       (pad "MP" smd rect
-        (at 4.06 -17.425 ${p.rot})
+        (at 4.06 -${get_dist(-2.575)} ${p.rot})
         (size 2 2.5)
         (layers "${p.side}.Cu" "${p.side}.Paste" "${p.side}.Mask")
       )
       (pad "MP" smd rect
-        (at 9.94 -17.425 ${p.rot})
+        (at 9.94 -${get_dist(-2.575)} ${p.rot})
         (size 2 2.5)
         (layers "${p.side}.Cu" "${p.side}.Paste" "${p.side}.Mask")
       )
       (fp_circle
-        (center 4.95 -20.5)
-        (end 5.2 -20.5)
+        (center 4.95 -${get_dist(0.5)})
+        (end 5.2 -${get_dist(0.5)})
         (layer "${p.side}.SilkS")
         (fill yes)
       )
       (fp_line
-        (start 5.35 -19.8)
-        (end 3.06 -19.8)
+        (start 5.35 -${get_dist(-0.2)})
+        (end 3.06 -${get_dist(-0.2)})
         (layer "${p.side}.SilkS")
         (width 0.15)
       )
       (fp_line
-        (start 3.06 -19.8)
-        (end 3.06 -18.9)
+        (start 3.06 -${get_dist(-0.2)})
+        (end 3.06 -${get_dist(-1.1)})
         (layer "${p.side}.SilkS")
         (width 0.15)
       )
       (fp_line
-        (start 3.06 -16)
-        (end 3.06 -13.9)
+        (start 3.06 -${get_dist(-4)})
+        (end 3.06 -${get_dist(-6.1)})
         (layer "${p.side}.SilkS")
         (width 0.15)
       )
       (fp_line
-        (start 3.06 -13.9)
-        (end 10.94 -13.9)
+        (start 3.06 -${get_dist(-6.1)})
+        (end 10.94 -${get_dist(-6.1)})
         (layer "${p.side}.SilkS")
         (width 0.15)
       )
       (fp_line
-        (start 3.06 -14.9)
-        (end 10.94 -14.9)
+        (start 3.06 -${get_dist(-5.1)})
+        (end 10.94 -${get_dist(-5.1)})
         (layer "${p.side}.SilkS")
         (width 0.15)
       )
       (fp_line
-        (start 10.94 -16)
-        (end 10.94 -13.9)
+        (start 10.94 -${get_dist(-4)})
+        (end 10.94 -${get_dist(-6.1)})
         (layer "${p.side}.SilkS")
         (width 0.15)
       )
       (fp_line
-        (start 10.94 -19.8)
-        (end 10.94 -18.9)
+        (start 10.94 -${get_dist(-0.2)})
+        (end 10.94 -${get_dist(-1.1)})
         (layer "${p.side}.SilkS")
         (width 0.15)
       )
       (fp_line
-        (start 10.94 -19.8)
-        (end 8.65 -19.8)
+        (start 10.94 -${get_dist(-0.2)})
+        (end 8.65 -${get_dist(-0.2)})
         (layer "${p.side}.SilkS")
         (width 0.15)
       )
