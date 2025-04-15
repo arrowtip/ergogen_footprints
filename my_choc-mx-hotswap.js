@@ -15,8 +15,9 @@ module.exports = {
     keycaps: false,
     preroute: true,
     trace_width: 0.5,
-    from: undefined,
-    to: undefined
+    in: undefined,
+    out: undefined,
+    inout: undefined,
   },
   body: p => {
     const standard = `
@@ -96,12 +97,13 @@ module.exports = {
         (at 1.65 5 ${p.r}) 
         (size 0.9 1.2) 
         (layers F.Cu F.Paste F.Mask) 
-        ${p.to})
+        ${p.out})
       (pad 2 smd rect 
         (at -1.65 5 ${p.r}) 
         (size 0.9 1.2) 
         (layers F.Cu F.Paste F.Mask) 
-        ${p.from})
+        ${p.inout}
+      )
       
       ${''/* THT terminals */}
       (pad 1 thru_hole rect 
@@ -109,13 +111,14 @@ module.exports = {
         (size 1.778 1.778) 
         (drill 0.9906)
         (layers *.Cu *.Mask) 
-        ${p.to})
+        ${p.out})
       (pad 2 thru_hole circle 
         (at -3.81 5 ${p.r}) 
         (size 1.905 1.905) 
         (drill 0.9906) 
         (layers *.Cu *.Mask)
-        ${p.from})
+        ${p.inout}
+      )
       `
     const get_at_coordinates = () => {
         const pattern = /\(at (-?[\d\.]*) (-?[\d\.]*) (-?[\d\.]*)\)/;
@@ -156,16 +159,12 @@ module.exports = {
         (end ${adjust_point(-1.65, 5)})
         (width ${p.trace_width})
         (layer "F.Cu")
-        (net 1)
-        (uuid "f63fe8cd-3353-48e3-9ed6-cd7206921eb4")
       )
       (segment
         (start ${adjust_point(3.81, 5)})
         (end ${adjust_point(1.65, 5)})
         (width ${p.trace_width})
         (layer "F.Cu")
-        (net 2)
-        (uuid "eda2f40a-e7f4-4227-83e1-77916e727049")
       )
       ${''/* hotswap from to from */}
       (segment
@@ -173,24 +172,18 @@ module.exports = {
         (end ${adjust_point(-7.085, -4.265)})
         (width ${p.trace_width})
         (layer "B.Cu")
-        (net 1)
-        (uuid "5fc16beb-5ed5-46f9-bff8-efa66e5f66a2")
       )
       (segment
         (start ${adjust_point(-5.4, -5.95)})
         (end ${adjust_point(-3.275, -5.95)})
         (width ${p.trace_width})
         (layer "B.Cu")
-        (net 1)
-        (uuid "51a54e94-966b-42ad-b2bd-deabe64562dc")
       )
       (segment
         (start ${adjust_point(-7.085, -4.265)})
         (end ${adjust_point(-5.4, -5.95)})
         (width ${p.trace_width})
         (layer "B.Cu")
-        (net 1)
-        (uuid "ca092736-26f8-454c-9af3-1daea333bb40")
       )
       ${''/* hotswap-from to diode */}
       (segment
@@ -198,57 +191,24 @@ module.exports = {
         (end ${adjust_point(-7.8, -1.825)})
         (width ${p.trace_width})
         (layer "B.Cu")
-        (net 1)
-        (uuid "334881fb-e1db-4ca3-bd07-4d647787ebcc")
       )
       (segment
         (start ${adjust_point(-7.8, 2.25)})
         (end ${adjust_point(-5.05, 5)})
         (width ${p.trace_width})
         (layer "B.Cu")
-        (net 1)
-        (uuid "6e234588-e4ec-45c0-b2f6-002cdbff7e58")
       )
       (segment
         (start ${adjust_point(-7.8, -1.825)})
         (end ${adjust_point(-7.8, 2.25)})
         (width ${p.trace_width})
         (layer "B.Cu")
-        (net 1)
-        (uuid "9a15080c-914c-44e3-95e4-189e8095b82a")
       )
       (segment
         (start ${adjust_point(-5.05, 5)})
         (end ${adjust_point(-3.81, 5)})
         (width ${p.trace_width})
         (layer "B.Cu")
-        (net 1)
-        (uuid "f899f364-dc03-4789-bbed-d436c0fdfc88")
-      )
-      ${''/* diode to hotswap-to */}
-      (segment
-        (start ${adjust_point(8.275, -3.75)})
-        (end ${adjust_point(8.275, 2.275)})
-        (width ${p.trace_width})
-        (layer "B.Cu")
-        (net 2)
-        (uuid "2c5df98e-0170-4f69-825c-63f730d60ee4")
-      )
-      (segment
-        (start ${adjust_point(5.55, 5)})
-        (end ${adjust_point(3.81, 5)})
-        (width ${p.trace_width})
-        (layer "B.Cu")
-        (net 2)
-        (uuid "70c8d573-90d6-4846-8dd7-cc3edf06ab13")
-      )
-      (segment
-        (start ${adjust_point(8.275, 2.275)})
-        (end ${adjust_point(5.55, 5)})
-        (width ${p.trace_width})
-        (layer "B.Cu")
-        (net 2)
-        (uuid "a39314fa-0b69-4f0d-8051-d3d91ae9ec32")
       )
       `
     function pins(def_neg, def_pos, def_side) {
@@ -281,23 +241,25 @@ module.exports = {
           (at ${def_neg}3.275 -5.95 ${p.r}) 
           (size 2.6 2.6) 
           (layers ${def_side}.Cu ${def_side}.Paste ${def_side}.Mask) 
-          ${p.from})
+          ${p.inout}
+        )
         (pad 2 smd rect 
           (at ${def_pos}8.275 -3.75 ${p.r}) 
           (size 2.6 2.6) 
           (layers ${def_side}.Cu ${def_side}.Paste ${def_side}.Mask) 
-          ${p.to})
+          ${p.in})
         ${'' /* net pads mx */}
         (pad 1 smd rect 
           (at ${def_neg}7.085 -2.54 ${p.r}) 
           (size 2.55 2.5) 
           (layers ${def_side}.Cu ${def_side}.Paste ${def_side}.Mask) 
-          ${p.from})
+          ${p.inout}
+        )
         (pad 2 smd rect 
           (at ${def_pos}5.842 -5.08 ${p.r}) 
           (size 2.55 2.5) 
           (layers ${def_side}.Cu ${def_side}.Paste ${def_side}.Mask) 
-          ${p.to})
+          ${p.in})
       `
     }
     return `
