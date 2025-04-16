@@ -3,8 +3,9 @@
 module.exports = {
     params: {
         class: 'B', // for Button
-        side: 'F',
+        side: 'both',
         variant: '4_pin_smd',
+        text: '',
         from: undefined,
         to: undefined
     },
@@ -40,8 +41,25 @@ module.exports = {
             )
             `
         } else if (p.variant == '2_pin_th') {
-            // this footprint goes to both sides by default so it ignores the layer setting
-            return `
+          label = '';
+          if (p.side == 'F' || p.side == 'both') {
+            label = `
+              ${label}
+              (fp_text user ${p.text} 
+                (at 0 0 ${p.rot}) (layer F.SilkS) 
+                (effects (font (size 1 1) (thickness 0.15))))
+            `;
+          }
+          if (p.side == 'B' || p.side == 'both') {
+            label = `
+              ${label}
+              (fp_text user ${p.text} 
+                (at 0.127 0 ${p.rot}) (layer B.SilkS) 
+                (effects (font (size 1 1) (thickness 0.15)) (justify mirror)))
+            `;
+          }
+
+          return `
             (module kbd:ResetSW (layer F.Cu) (tedit 5B9559E6) (tstamp 61905781)
 
                 (descr "Two pin through hole Tactile Switch, the same as on the Corne")
@@ -49,13 +67,16 @@ module.exports = {
 
                 ${p.at /* parametric position */}
                 ${'' /* footprint reference */}
-                (fp_text reference "${p.ref}" (at 0 2.55) (layer F.SilkS) ${p.ref_hide} (effects (font (size 1 1) (thickness 0.15))))
-                (fp_text value "" (at 0 -2.55) (layer F.Fab) (effects (font (size 1 1) (thickness 0.15))))
+                (fp_text reference "${p.ref}" 
+                  (at 0 2.55) (layer F.SilkS) ${p.ref_hide} 
+                  (effects (font (size 1 1) (thickness 0.15))))
+                (fp_text value "" 
+                  (at 0 -2.55) (layer F.Fab) 
+                  (effects (font (size 1 1) (thickness 0.15))))
+
+                ${label}
 
                 ${'' /* outline */}
-                (fp_text user RESET (at 0 0 ${p.rot}) (layer F.SilkS) (effects (font (size 1 1) (thickness 0.15))))
-                (fp_text user RESET (at 0.127 0 ${p.rot}) (layer B.SilkS) (effects (font (size 1 1) (thickness 0.15)) (justify mirror)))
-
                 (fp_line (start 3 1.5) (end 3 1.75) (layer B.SilkS) (width 0.15))
                 (fp_line (start 3 1.75) (end -3 1.75) (layer B.SilkS) (width 0.15))
                 (fp_line (start -3 1.75) (end -3 1.5) (layer B.SilkS) (width 0.15))
