@@ -48,6 +48,20 @@ module.exports = {
               (fp_text user ${p.text} 
                 (at 0 0 ${p.rot}) (layer F.SilkS) 
                 (effects (font (size 1 1) (thickness 0.15))))
+              ${'' /* outline */}
+              (fp_line (start -3 1.75) (end 3 1.75) 
+                (layer F.SilkS) (width 0.15))
+              (fp_line (start 3 1.75) (end 3 1.5) 
+                (layer F.SilkS) (width 0.15))
+              (fp_line (start -3 1.75) (end -3 1.5) 
+                (layer F.SilkS) (width 0.15))
+              (fp_line (start -3 -1.75) (end -3 -1.5) 
+                (layer F.SilkS) (width 0.15))
+              (fp_line (start -3 -1.75) (end 3 -1.75) 
+                (layer F.SilkS) (width 0.15))
+              (fp_line (start 3 -1.75) (end 3 -1.5) 
+                (layer F.SilkS) (width 0.15))
+
             `;
           }
           if (p.side == 'B' || p.side == 'both') {
@@ -56,6 +70,19 @@ module.exports = {
               (fp_text user ${p.text} 
                 (at 0.127 0 ${p.rot}) (layer B.SilkS) 
                 (effects (font (size 1 1) (thickness 0.15)) (justify mirror)))
+              ${'' /* outline */}
+              (fp_line (start 3 1.5) (end 3 1.75) 
+                (layer B.SilkS) (width 0.15))
+              (fp_line (start 3 1.75) (end -3 1.75) 
+                (layer B.SilkS) (width 0.15))
+              (fp_line (start -3 1.75) (end -3 1.5) 
+                (layer B.SilkS) (width 0.15))
+              (fp_line (start -3 -1.5) (end -3 -1.75) 
+                (layer B.SilkS) (width 0.15))
+              (fp_line (start -3 -1.75) (end 3 -1.75) 
+                (layer B.SilkS) (width 0.15))
+              (fp_line (start 3 -1.75) (end 3 -1.5) 
+                (layer B.SilkS) (width 0.15))
             `;
           }
 
@@ -75,20 +102,6 @@ module.exports = {
                   (effects (font (size 1 1) (thickness 0.15))))
 
                 ${label}
-
-                ${'' /* outline */}
-                (fp_line (start 3 1.5) (end 3 1.75) (layer B.SilkS) (width 0.15))
-                (fp_line (start 3 1.75) (end -3 1.75) (layer B.SilkS) (width 0.15))
-                (fp_line (start -3 1.75) (end -3 1.5) (layer B.SilkS) (width 0.15))
-                (fp_line (start -3 -1.5) (end -3 -1.75) (layer B.SilkS) (width 0.15))
-                (fp_line (start -3 -1.75) (end 3 -1.75) (layer B.SilkS) (width 0.15))
-                (fp_line (start 3 -1.75) (end 3 -1.5) (layer B.SilkS) (width 0.15))
-                (fp_line (start -3 1.75) (end 3 1.75) (layer F.SilkS) (width 0.15))
-                (fp_line (start 3 1.75) (end 3 1.5) (layer F.SilkS) (width 0.15))
-                (fp_line (start -3 1.75) (end -3 1.5) (layer F.SilkS) (width 0.15))
-                (fp_line (start -3 -1.75) (end -3 -1.5) (layer F.SilkS) (width 0.15))
-                (fp_line (start -3 -1.75) (end 3 -1.75) (layer F.SilkS) (width 0.15))
-                (fp_line (start 3 -1.75) (end 3 -1.5) (layer F.SilkS) (width 0.15))
 
                 ${'' /* pins */}
                 (pad 2 thru_hole circle (at -3.25 0 ${p.rot}) (size 2 2) (drill 1.3) (layers *.Cu *.Mask F.SilkS) ${p.from.str})
